@@ -1,0 +1,9 @@
+@import "tailwindcss";
+@import "./sizes.css";
+
+html,
+body {
+  width: 100dvw;
+  min-height: 100dvh;
+  font-size: 62.5% !important;
+}
