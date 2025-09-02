@@ -5,7 +5,7 @@ type Props = {
   children: ReactNode;
 };
 
-export default function BeforeLoginLayout({ children }: Props) {
+export default async function BeforeLoginLayout({ children }: Props) {
   return (
     <>
       <main

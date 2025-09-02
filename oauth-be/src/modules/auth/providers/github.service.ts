@@ -7,9 +7,9 @@ import { firstValueFrom } from 'rxjs';
 export class GithubService {
   constructor(private readonly httpService: HttpService) {}
 
-  getGithubAuthUrl(): string {
-    const clientId = process.env.GITHUB_AOUTH_CLIENT_ID;
-    const redirectUri = process.env.GITHUB_AOUTH_CALLBACK_URL;
+  getGithubAuthURL(): string {
+    const clientId = process.env.GITHUB_OAUTH_CLIENT_ID;
+    const redirectUri = process.env.GITHUB_OAUTH_CALLBACK_URL;
     const scope = 'user:email';
     const state = randomBytes(16).toString('hex');
 
@@ -17,8 +17,8 @@ export class GithubService {
   }
 
   async getGithubAccessToken(code: string) {
-    const clientId = process.env.GITHUB_AOUTH_CLIENT_ID;
-    const clientSecret = process.env.GITHUB_AOUTH_CLIENT_SECRETS;
+    const clientId = process.env.GITHUB_OAUTH_CLIENT_ID;
+    const clientSecret = process.env.GITHUB_OAUTH_CLIENT_SECRETS;
 
     const res = await firstValueFrom(
       this.httpService.post(

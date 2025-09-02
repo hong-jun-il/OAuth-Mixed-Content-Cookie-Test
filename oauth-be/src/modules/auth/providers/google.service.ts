@@ -7,20 +7,19 @@ import { firstValueFrom } from 'rxjs';
 export class GoogleService {
   constructor(private readonly httpService: HttpService) {}
 
-  getGoogleAuthIrl(): string {
-    const clientId = process.env.GOOGLE_AOUTH_CLIENT_ID;
-    const redirectUri = process.env.GOOGLE_AOUTH_CALLBACK_URL;
+  getGoogleAuthURL(): string {
+    const clientId = process.env.GOOGLE_OAUTH_CLIENT_ID;
+    const redirectUri = process.env.GOOGLE_OAUTH_CALLBACK_URL;
     const scope = 'email';
     const state = randomBytes(16).toString('hex');
 
     return `https://accounts.google.com/o/oauth2/v2/auth?scope=${scope}&response_type=code&state=${state}&redirect_uri=${redirectUri}&client_id=${clientId}&access_type=offline&prompt=consent`;
   }
 
-  async getToken(code: string) {
-    const clientId = process.env.GOOGLE_AOUTH_CLIENT_ID;
-    const clientSecret = process.env.GOOGLE_AOUTH_CLIENT_SECRETS;
-
-    const redirectUri = process.env.GOOGLE_AOUTH_CALLBACK_URL;
+  async getGoogleTokens(code: string) {
+    const clientId = process.env.GOOGLE_OAUTH_CLIENT_ID;
+    const clientSecret = process.env.GOOGLE_OAUTH_CLIENT_SECRETS;
+    const redirectUri = process.env.GOOGLE_OAUTH_CALLBACK_URL;
 
     const res = await firstValueFrom(
       this.httpService.post(

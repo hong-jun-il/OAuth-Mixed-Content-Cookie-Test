@@ -9,11 +9,11 @@ export class UserProviderDto {
 
   @IsString()
   @IsNotEmpty()
-  name: string;
+  provider: ProviderType;
 
   @IsString()
   @IsNotEmpty()
-  provider: ProviderType;
+  user_name: string;
 
   @IsString()
   @IsNotEmpty()

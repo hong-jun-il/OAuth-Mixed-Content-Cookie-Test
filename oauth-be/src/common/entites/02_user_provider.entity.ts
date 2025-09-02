@@ -18,7 +18,7 @@ export class UserProviderEntity {
   provider: string;
 
   @Column({ type: 'varchar', length: 50, nullable: true })
-  name?: string;
+  user_name?: string;
 
   @Column({ type: 'text', nullable: false })
   access_token: string;

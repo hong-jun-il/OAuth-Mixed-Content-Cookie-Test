@@ -6,6 +6,10 @@ import {
   MaxLength,
 } from 'class-validator';
 
+/**
+ * @deprecated User dto 사용 안함
+ */
+
 export class UserDto {
   @IsOptional()
   @IsNotEmpty()

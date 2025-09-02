@@ -6,6 +6,10 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
+/**
+ * @deprecated User 엔티티 사용 안함
+ */
+
 @Entity('user')
 export class UserEntity {
   @PrimaryGeneratedColumn()

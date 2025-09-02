@@ -8,7 +8,6 @@ import { NaverService } from './providers/naver.service';
 import { KakaoService } from './providers/kakao.service';
 import { UsersModule } from '../users/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserEntity } from 'src/common/entites/01_user.entity';
 import { UserProviderEntity } from 'src/common/entites/02_user_provider.entity';
 import { JwtModule } from '@nestjs/jwt';
 
@@ -17,7 +16,7 @@ import { JwtModule } from '@nestjs/jwt';
     HttpModule,
     UsersModule,
     JwtModule,
-    TypeOrmModule.forFeature([UserEntity, UserProviderEntity]),
+    TypeOrmModule.forFeature([UserProviderEntity]),
   ],
   controllers: [AuthController],
   providers: [
