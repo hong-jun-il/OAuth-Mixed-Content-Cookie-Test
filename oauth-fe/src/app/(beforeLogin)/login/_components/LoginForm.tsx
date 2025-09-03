@@ -1,5 +1,6 @@
 "use client";
 
+import CookieFetchBtn from "@/app/(afterLogin)/home/_components/CookieFetchBtn";
 import clsx from "clsx";
 import { useRouter } from "next/navigation";
 
@@ -52,6 +53,8 @@ export default function LoginForm() {
       >
         네이버 로그인
       </button>
+
+      <CookieFetchBtn />
     </form>
   );
 }

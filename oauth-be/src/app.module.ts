@@ -6,6 +6,7 @@ import { UsersModule } from './modules/users/users.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { dataSourceOptions } from 'db/datasource';
+import { FetchCookieModule } from './modules/fetch-cookie/fetch-cookie.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { dataSourceOptions } from 'db/datasource';
     TypeOrmModule.forRoot(dataSourceOptions),
     UsersModule,
     AuthModule,
+    FetchCookieModule,
   ],
   controllers: [],
   providers: [

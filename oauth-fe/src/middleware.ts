@@ -14,15 +14,13 @@ export default async function middleware(req: NextRequest) {
   const accessToken = cookieStore.get("access_token")?.value;
   const refreshToken = cookieStore.get("refresh_token")?.value;
 
-  // protected routes이고
+  // protected routes일때
   if (isProtectedRoute) {
     // 액세스 토큰이 없을때
     if (!accessToken) {
-      // 리프레쉬 토큰도 없다면 로그인 페이지로 리다이렉트
+      // 리프레쉬 토큰도 없다면 session-expired 페이지로 리다이렉트
       if (!refreshToken) {
-        return NextResponse.redirect(
-          new URL(`/login?redirectedURL=${path}`, req.nextUrl)
-        );
+        return NextResponse.redirect(new URL(`/session-expired`, req.nextUrl));
       }
       // 리프레쉬 토큰이 있다면 재발급 요청
       else {
@@ -53,6 +51,13 @@ export default async function middleware(req: NextRequest) {
           return cookieResponse;
         }
       }
+    }
+  }
+  // public routes일때
+  else {
+    // 인증 토큰이 하나라도 남아있다면
+    if (accessToken || refreshToken) {
+      return NextResponse.redirect(new URL(`/home`, req.nextUrl));
     }
   }
 
