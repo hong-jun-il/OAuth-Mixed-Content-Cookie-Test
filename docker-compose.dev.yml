@@ -1,0 +1,34 @@
+services:
+  postgres:
+    image: postgres:17
+    container_name: postgres_oauth_test
+    restart: always
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+    ports:
+      - "${POSTGRES_PORT}:5432"
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - oauth_test_pg_data:/var/lib/postgresql/data
+
+  nestjs_oauth_test:
+    build:
+      context: ./oauth-be
+      dockerfile: dockerfile.dev
+    ports:
+      - "${NESTJS_PORT}:5000"
+    environment:
+      - DB_TYPE=${DB_TYPE}
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_DATABASE=${DB_DATABASE}
+    volumes:
+      - ./oauth-be:/usr/src/app
+      - /usr/src/app/node_modules
+
+volumes:
+  oauth_test_pg_data:

@@ -9,10 +9,10 @@ export default async function middleware(req: NextRequest) {
   // const isPublicRoute = publicRoutes.includes(path);
   const isProtectedRoute = protectedRoutes.includes(path);
 
-  const cookie = await cookies();
+  const cookieStore = await cookies();
 
-  const accessToken = cookie.get("access_token")?.value;
-  const refreshToken = cookie.get("refresh_token")?.value;
+  const accessToken = cookieStore.get("access_token")?.value;
+  const refreshToken = cookieStore.get("refresh_token")?.value;
 
   // protected routes이고
   if (isProtectedRoute) {
@@ -20,7 +20,9 @@ export default async function middleware(req: NextRequest) {
     if (!accessToken) {
       // 리프레쉬 토큰도 없다면 로그인 페이지로 리다이렉트
       if (!refreshToken) {
-        return NextResponse.redirect(new URL("/login", req.nextUrl));
+        return NextResponse.redirect(
+          new URL(`/login?redirectedURL=${path}`, req.nextUrl)
+        );
       }
       // 리프레쉬 토큰이 있다면 재발급 요청
       else {
@@ -36,9 +38,11 @@ export default async function middleware(req: NextRequest) {
         );
 
         if (res.ok) {
+          // 토큰을 json으로 받아서 쿠키 저장소에 set
           const { data: accessToken } = await res.json();
 
           const cookieResponse = NextResponse.next();
+
           cookieResponse.cookies.set("access_token", accessToken, {
             httpOnly: true,
             secure: true,
